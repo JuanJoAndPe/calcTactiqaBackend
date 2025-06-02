@@ -78,7 +78,11 @@ app.post('/proxy', authenticateJWT, async (req, res) => {
     });
     res.json(response.data);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error en /proxy:', error.response?.data || error.message);
+    res.status(500).json({
+      error: error.message,
+      details: error.response?.data || null
+    });
   }
 });
 
